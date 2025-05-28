@@ -1,32 +1,47 @@
 import { useState } from "react";
 
-import { WordPair } from "../components/WordPair";
+import { toList, slice,  wordAt, wordIndexOf  }  from '../word-list';
+import { WordTriplet } from "../components/WordTriplet";
 
 const pairsPerPage = 1 << 7;
 
 const numPages = 1 << 4;
 
+const mask = (1 << 11) - 1;
+
+const wordListSize = 1 << 11;
+
+const randomBits = new Uint16Array(pairsPerPage);
+
 export const Splitter = () => {
 
     const [slider, setSlider] = useState(1);
+
+
+    globalThis.crypto.getRandomValues(randomBits);
 
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(e.target.value);
         setSlider(value);
     };
 
+    const words = toList(slice((slider - 1) * pairsPerPage, slider * pairsPerPage));
+
+
     return (
         <>
             <h1>Splitter</h1>
-            <div className="flex flex-col justify-center items-center">
-                <input  className=" border-gray-500 border-1" type="text" value="aaaaa" />
-            </div> 
             <div className="w-full">
                 <input className="w-full" type="range" min="1" max={numPages} value={slider} onChange={handleSliderChange} />
-                [{(slider -1)*pairsPerPage + 1}, {slider*pairsPerPage}]
+                [{(slider -1) * pairsPerPage + 1}, {slider * pairsPerPage}]
             </div>
             <div className="w-full h-full grid grid-cols-4 md:grid-cols-8 xl:grid-cols-16 gap-4 p-4">
-                {Array(pairsPerPage).fill(0).map((_, i) => <WordPair key={i} firstWord="aaaaa" secondWord="bbbb" />)}
+                {words.map((word, i) => {
+                    const wIdx = wordIndexOf(word) || 0;
+                    const keyIdx =  randomBits[i] & mask;
+                    const splitIdx = (wIdx - keyIdx + wordListSize) % wordListSize;
+                    return <WordTriplet key={word} firstWord={word} secondWord={wordAt(keyIdx) || ''} thirdWord={wordAt(splitIdx) || ''} />;
+                })}
             </div>
         </>
     );
