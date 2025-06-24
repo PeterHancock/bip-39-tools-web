@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router';
 
 const renderNavlLinkClass = (isActive: boolean) =>
-  `block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-teal-800 mr-4 ${isActive ? 'text-teal-500' : 'text-black'}`;
+  `block mt-4 lg:inline-block lg:mt-0 text-orange-200 hover:text-orange-800 mr-4 ${isActive ? 'text-orange-500' : 'text-black'}`;
 
 export const Page = () => {
   const [hidden, setHidden] = useState(true);
@@ -45,20 +45,20 @@ export const Page = () => {
               Home
             </NavLink>
             <NavLink
-              to="/splitter"
+              to="/split"
               className={({ isActive }) =>
                 `${renderNavlLinkClass(isActive)} mr-4`
               }
             >
-              Splitter
+              Split
             </NavLink>
             <NavLink
-              to="/joiner"
+              to="/combine"
               className={({ isActive }) =>
                 `${renderNavlLinkClass(isActive)} mr-4`
               }
             >
-              Joiner
+              Combine
             </NavLink>
           </div>
         </div>

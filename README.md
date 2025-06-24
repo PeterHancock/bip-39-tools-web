@@ -24,8 +24,6 @@ This project is a web-based tool for splitting and recombining BIP-39 mnemonic s
 - **Vite**
 - **Tailwind CSS**
 
-
 ### Online
 
 Visit the [live demo](https://peterhancock.github.io/bip-39-tools-web/) to use the tool instantly in your browser.
-
