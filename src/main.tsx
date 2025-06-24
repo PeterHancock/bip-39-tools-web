@@ -9,7 +9,7 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-      <BrowserRouter>
+      <BrowserRouter  basename="bip-39-tools-web">
         <App />
       </BrowserRouter>
     </StrictMode>,
